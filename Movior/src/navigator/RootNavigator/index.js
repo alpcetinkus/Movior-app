@@ -2,6 +2,8 @@ import React from 'react'
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs"
 import { Entypo, FontAwesome5, Ionicons } from '@expo/vector-icons'; 
 import HomeNavigator from "../HomeNavigator"
+import DiscoverNavigator from "../DiscoverNavigator"
+
 
 
 const Tab = createBottomTabNavigator()
@@ -36,7 +38,7 @@ function index() {
     />
      <Tab.Screen 
     name= "Discovery"
-    component={HomeNavigator}
+    component={DiscoverNavigator}
     options={{
         tabBarIcon: ({color}) => (
             <FontAwesome5 name="play" size={30} color={color} />

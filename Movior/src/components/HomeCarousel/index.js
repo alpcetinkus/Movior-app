@@ -1,42 +1,41 @@
-import React from 'react'
-import { Dimensions, StyleSheet, Image, View } from 'react-native';
-import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
+import React, {useState, useEffect}from 'react'
+import { Dimensions, StyleSheet, Image, View, TouchableOpacity } from 'react-native';
+import Carousel from 'react-native-snap-carousel';
+import axios from "axios"
+import { useNavigation } from '@react-navigation/native';
+
 
 const {width:screenWidth,height} = Dimensions.get('window')
 const sliderWidth =screenWidth;
 const itemWidth = screenWidth * 0.5;
 
-const data = [
-    {
-       imgUrl: "https://image.tmdb.org/t/p/w400/uldNFFKNXNvwss0MIZErMSFkBJZ.jpg"
-    },
-    {
-        imgUrl: "https://image.tmdb.org/t/p/w400/ljl70pjLIX1hx3bPyCCbxGj6WPr.jpg"
-    },
-    {
-        imgUrl: "https://image.tmdb.org/t/p/w400/iwsMu0ehRPbtaSxqiaUDQB9qMWT.jpg"
-     },
-     {
-        imgUrl: "https://image.tmdb.org/t/p/w400/6yx14lSACNJ2zRoYyXqecf3QNgr.jpg"
-     },
-     {
-        imgUrl: "https://image.tmdb.org/t/p/w400/4m1Au3YkjqsxF8iwQy0fPYSxE0h.jpg"
-     },
-     {
-        imgUrl: "https://image.tmdb.org/t/p/w400/uldNFFKNXNvwss0MIZErMSFkBJZ.jpg"
-     },
-     {
-        imgUrl: "https://image.tmdb.org/t/p/w400/uldNFFKNXNvwss0MIZErMSFkBJZ.jpg"
-     },
+const API_URL = 'https://api.themoviedb.org/3';
+const API_KEY = 'd0db8f3e22e7317943ec9cd6fad83b1d';
+const IMAGE_URL = 'https://image.tmdb.org/t/p/w342';
 
-];
 
-const renderItem =({item}) => (
-    <View style={styles.itemContainer}>
-        <Image style={styles.itemImg}source={{uri:item.imgUrl}}/>
-    </View>
-)
+
 function index() {
+    const [data,setData] = useState([])
+    useEffect(() => {getTrendingMovies()},[])
+
+    const getTrendingMovies = async () => {
+        try{
+          await axios.get(`${API_URL}/trending/all/week?api_key=${API_KEY}&language=en-US&page=1`)
+          .then(res => setData(res.data.results))
+        } catch(error) {
+          console.log(error)
+        }
+    }
+    const navigation = useNavigation();
+
+    const renderItem =({item}) => (
+        <TouchableOpacity style={styles.itemContainer}
+        
+        >
+            <Image style={styles.itemImg}source={{uri: IMAGE_URL + item.poster_path}}/>
+        </TouchableOpacity>
+    )
   return (
     <Carousel 
     layout='default'
@@ -45,7 +44,7 @@ function index() {
     sliderWidth={sliderWidth}
     itemWidth={itemWidth}
     firstItem={1}
-    loop={true}
+   
     />
   )
 }

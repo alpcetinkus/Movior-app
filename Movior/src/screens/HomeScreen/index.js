@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {View, Text, Dimensions, ScrollView} from "react-native"
 import ContinueItem from "../../components/ContinueItem"
 import HomeCarousel from "../../components/HomeCarousel"
+import DiscoveryItem from "../../components/DiscoveryItem"
 
 // const {width,height} = Dimensions.get('window')
 
@@ -13,6 +14,7 @@ function index() {
         <ContinueItem />
         <Text style={{color:'white', fontSize:18,fontWeight:'500', marginHorizontal:'5%',marginBottom:10}}>Trending</Text>
         <HomeCarousel />
+        
     </ScrollView>
   )
 }
